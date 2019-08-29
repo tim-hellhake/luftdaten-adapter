@@ -1,0 +1,61 @@
+{
+  "name": "luftdaten-adapter",
+  "display_name": "Luftdaten",
+  "version": "0.1.0",
+  "description": "Connect sensors from https://luftdaten.info",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tim-hellhake/luftdaten-adapter.git"
+  },
+  "author": "Tim Hellhake",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/tim-hellhake/luftdaten-adapter/issues"
+  },
+  "homepage": "https://github.com/tim-hellhake/luftdaten-adapter#readme",
+  "files": [
+    "LICENSE",
+    "SHA256SUMS",
+    "lib/index.js",
+    "lib/luftdaten-adapter.js"
+  ],
+  "moziot": {
+    "api": {
+      "min": 2,
+      "max": 2
+    },
+    "plugin": true,
+    "exec": "{nodeLoader} {path}",
+    "schema": {
+      "type": "object",
+      "required": [
+        "latitude",
+        "longitude"
+      ],
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "title": "The latitude of your position"
+        },
+        "longitude": {
+          "type": "number",
+          "title": "The longitude of your position"
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "@types/node-fetch": "^2.5.0",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.6.2",
+    "@types/node": "^12.7.2"
+  }
+}

@@ -67,7 +67,12 @@ export class LuftdatenAdapter extends Adapter {
   constructor(addonManager: any, private manifest: any) {
     super(addonManager, LuftdatenAdapter.name, manifest.name);
     addonManager.addAdapter(this);
-    this.startPolling(60);
+
+    const {
+      pollInterval
+    } = this.manifest.moziot.config;
+
+    this.startPolling(pollInterval);
   }
 
   public startPolling(seconds: number) {

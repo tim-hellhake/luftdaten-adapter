@@ -32,11 +32,15 @@
     },
     "plugin": true,
     "exec": "{nodeLoader} {path}",
+    "config": {
+      "pollInterval": 300
+    },
     "schema": {
       "type": "object",
       "required": [
         "latitude",
-        "longitude"
+        "longitude",
+        "pollInterval"
       ],
       "properties": {
         "latitude": {
@@ -46,6 +50,10 @@
         "longitude": {
           "type": "number",
           "title": "The longitude of your position"
+        },
+        "pollInterval": {
+          "type": "number",
+          "title": "The poll interval in seconds"
         }
       }
     }

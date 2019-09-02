@@ -1,7 +1,7 @@
 {
   "name": "luftdaten-adapter",
   "display_name": "Luftdaten",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Connect sensors from https://luftdaten.info",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

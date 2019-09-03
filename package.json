@@ -33,14 +33,16 @@
     "plugin": true,
     "exec": "{nodeLoader} {path}",
     "config": {
-      "pollInterval": 300
+      "pollInterval": 300,
+      "radius": 5
     },
     "schema": {
       "type": "object",
       "required": [
         "latitude",
         "longitude",
-        "pollInterval"
+        "pollInterval",
+        "radius"
       ],
       "properties": {
         "latitude": {
@@ -54,6 +56,10 @@
         "pollInterval": {
           "type": "number",
           "title": "The poll interval in seconds"
+        },
+        "radius": {
+          "type": "number",
+          "title": "The search radius in km"
         }
       }
     }

@@ -101,10 +101,11 @@ export class LuftdatenAdapter extends Adapter {
   async findSensors() {
     const {
       latitude,
-      longitude
+      longitude,
+      radius
     } = this.manifest.moziot.config;
 
-    const url = `http://api.luftdaten.info/v1/filter/area=${latitude},${longitude},5`;
+    const url = `http://api.luftdaten.info/v1/filter/area=${latitude},${longitude},${radius}`;
     const result = await fetch(url);
     return <Sensor[]>await result.json();
   }

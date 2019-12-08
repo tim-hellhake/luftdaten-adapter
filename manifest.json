@@ -1,0 +1,52 @@
+{
+  "manifest_version": 1,
+  "id": "luftdaten-adapter",
+  "name": "Luftdaten",
+  "short_name": "Luftdaten",
+  "version": "0.3.0",
+  "description": "Connect sensors from https://luftdaten.info",
+  "homepage_url": "https://github.com/tim-hellhake/luftdaten-adapter#readme",
+  "license": "MPL-2.0",
+  "author": "Tim Hellhake",
+  "gateway_specific_settings": {
+    "webthings": {
+      "exec": "{nodeLoader} {path}",
+      "strict_min_version": "0.10.0",
+      "strict_max_version": "*",
+      "primary_type": "adapter"
+    }
+  },
+  "options": {
+    "default": {
+      "pollInterval": 300,
+      "radius": 5
+    },
+    "schema": {
+      "type": "object",
+      "required": [
+        "latitude",
+        "longitude",
+        "pollInterval",
+        "radius"
+      ],
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "title": "The latitude of your position"
+        },
+        "longitude": {
+          "type": "number",
+          "title": "The longitude of your position"
+        },
+        "pollInterval": {
+          "type": "number",
+          "title": "The poll interval in seconds"
+        },
+        "radius": {
+          "type": "number",
+          "title": "The search radius in km"
+        }
+      }
+    }
+  }
+}

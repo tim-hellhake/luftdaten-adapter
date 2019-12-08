@@ -3,7 +3,7 @@
   "id": "luftdaten-adapter",
   "name": "Luftdaten",
   "short_name": "Luftdaten",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Connect sensors from https://luftdaten.info",
   "homepage_url": "https://github.com/tim-hellhake/luftdaten-adapter#readme",
   "license": "MPL-2.0",

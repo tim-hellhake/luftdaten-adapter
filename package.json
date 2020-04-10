@@ -66,11 +66,11 @@
     }
   },
   "dependencies": {
-    "@types/node-fetch": "^2.5.0",
+    "@types/node-fetch": "^2.5.5",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
-    "typescript": "^3.6.2",
-    "@types/node": "^12.7.2"
+    "typescript": "^3.8.3",
+    "@types/node": "^13.11.1"
   }
 }

@@ -43,8 +43,7 @@ class Luftdaten extends Device {
 
       if (property) {
         if (sensorValue.value) {
-          property.setCachedValue(sensorValue.value);
-          this.notifyPropertyChanged(property);
+          property.setCachedValueAndNotify(sensorValue.value);
         } else {
           console.warn(`Could not find value for property ${propertyName}`);
         }

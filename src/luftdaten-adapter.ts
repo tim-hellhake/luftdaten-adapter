@@ -84,12 +84,17 @@ export class LuftdatenAdapter extends Adapter {
     const sensors = await this.findSensors();
 
     for (const sensor of sensors) {
-      let device = this.devicesById[sensor.id] || this.createDevice(sensor);
+      let device = this.devicesById[sensor.id];
+
+      if (!device) {
+        device = this.createDevice(sensor);
+      }
+
       device.update(sensor);
     }
   }
 
-  private createDevice(sensor: Sensor): Device {
+  private createDevice(sensor: Sensor): Luftdaten {
     const id = sensor.id;
     console.log(`Creating new device for ${id}`);
     const device = new Luftdaten(this, this.manifest, sensor);

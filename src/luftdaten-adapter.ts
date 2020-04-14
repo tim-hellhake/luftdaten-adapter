@@ -8,9 +8,10 @@ import { Adapter, Device, Property } from 'gateway-addon';
 
 import fetch from 'node-fetch';
 
-interface Sensor {
+interface Measurement {
   id: number;
-  sensordatavalues: SensorValue[]
+  sensordatavalues: SensorValue[];
+  sensor: Sensor;
 }
 
 interface SensorValue {
@@ -18,14 +19,25 @@ interface SensorValue {
   value: string;
 }
 
+interface Sensor {
+  sensor_type: SensorType;
+  id: number;
+}
+
+interface SensorType {
+  id: string;
+  manufacturer: string;
+  name: string;
+}
+
 class Luftdaten extends Device {
-  constructor(adapter: any, manifest: any, sensor: Sensor) {
-    super(adapter, `luftdaten-${sensor.id}`);
+  constructor(adapter: any, manifest: any, measurement: Measurement) {
+    super(adapter, `${measurement?.sensor?.id}`);
     this['@context'] = 'https://iot.mozilla.org/schemas/';
-    this.name = `${Luftdaten.name} (${sensor.id})`;
+    this.name = measurement?.sensor?.sensor_type?.name;
     this.description = manifest.description;
 
-    for (const sensorValue of sensor.sensordatavalues) {
+    for (const sensorValue of measurement.sensordatavalues) {
       const propertyName = sensorValue.value_type;
 
       this.addProperty(propertyName, {
@@ -36,8 +48,8 @@ class Luftdaten extends Device {
     }
   }
 
-  public update(sensor: Sensor) {
-    for (const sensorValue of sensor.sensordatavalues) {
+  public update(measurement: Measurement) {
+    for (const sensorValue of measurement.sensordatavalues) {
       const propertyName = sensorValue.value_type;
       const property = this.properties.get(propertyName);
 
@@ -80,26 +92,21 @@ export class LuftdatenAdapter extends Adapter {
   }
 
   async poll() {
-    const sensors = await this.findSensors();
+    const measurements = await this.findSensors();
 
-    for (const sensor of sensors) {
-      let device = this.devicesById[sensor.id];
+    for (const measurement of measurements) {
+      let id = measurement?.sensor?.id;
+      let device = this.devicesById[id];
 
       if (!device) {
-        device = this.createDevice(sensor);
+        console.log(`Creating new device for ${id}`);
+        device = new Luftdaten(this, this.manifest, measurement);
+        this.devicesById[id] = device;
+        this.handleDeviceAdded(device);
       }
 
-      device.update(sensor);
+      device.update(measurement);
     }
-  }
-
-  private createDevice(sensor: Sensor): Luftdaten {
-    const id = sensor.id;
-    console.log(`Creating new device for ${id}`);
-    const device = new Luftdaten(this, this.manifest, sensor);
-    this.devicesById[id] = device;
-    this.handleDeviceAdded(device);
-    return device;
   }
 
   async findSensors() {
@@ -111,6 +118,6 @@ export class LuftdatenAdapter extends Adapter {
 
     const url = `http://api.luftdaten.info/v1/filter/area=${latitude},${longitude},${radius}`;
     const result = await fetch(url);
-    return <Sensor[]>await result.json();
+    return <Measurement[]>await result.json();
   }
 }

@@ -105,8 +105,9 @@ export class LuftdatenAdapter extends Adapter {
         let device = this.devicesById[id];
 
         if (!device) {
-          console.log(`Creating new device for ${id}`);
-          device = new Luftdaten(this, `${id}`, measurement);
+          const idWithPrefix = `luftdaten-${id}`;
+          console.log(`Creating new device for ${idWithPrefix}`);
+          device = new Luftdaten(this, idWithPrefix, measurement);
           this.devicesById[id] = device;
           this.handleDeviceAdded(device);
         }

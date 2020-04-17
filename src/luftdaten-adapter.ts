@@ -34,16 +34,35 @@ class Luftdaten extends Device {
   constructor(adapter: any, id: string, measurement: Measurement) {
     super(adapter, id);
     this['@context'] = 'https://iot.mozilla.org/schemas/';
+    this['@type'] = [];
     this.name = measurement?.sensor?.sensor_type?.name || id;
 
     for (const sensorValue of measurement.sensordatavalues || []) {
       const propertyName = sensorValue.value_type;
 
       if (propertyName) {
+        const additionalProperties: any = {};
+
+        if (propertyName === 'temperature') {
+          additionalProperties['@type'] = 'TemperatureProperty';
+          this['@type'].push('TemperatureSensor');
+        }
+
+        if (propertyName === 'P1') {
+          additionalProperties['@type'] = 'LevelProperty';
+          additionalProperties.type = 'number'
+          additionalProperties.unit = 'µg/m³';
+          additionalProperties.min = 0;
+          additionalProperties.max = 100;
+          additionalProperties.multipleOf = 0.01;
+          this['@type'].push('MultiLevelSensor');
+        }
+
         this.addProperty(propertyName, {
+          ...additionalProperties,
           type: 'number',
           title: propertyName,
-          readOnly: true
+          readOnly: true,
         });
       }
     }

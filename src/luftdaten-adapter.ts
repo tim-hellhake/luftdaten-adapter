@@ -49,13 +49,12 @@ class Luftdaten extends Device {
         }
 
         if (propertyName === 'P1') {
-          additionalProperties['@type'] = 'LevelProperty';
+          additionalProperties['@type'] = 'DensityProperty';
           additionalProperties.type = 'number'
           additionalProperties.unit = 'µg/m³';
           additionalProperties.min = 0;
-          additionalProperties.max = 100;
           additionalProperties.multipleOf = 0.01;
-          this['@type'].push('MultiLevelSensor');
+          this['@type'].push('AirQualitySensor');
         }
 
         this.addProperty(propertyName, {

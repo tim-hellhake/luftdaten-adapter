@@ -26,45 +26,6 @@
     "lib/index.js",
     "lib/luftdaten-adapter.js"
   ],
-  "moziot": {
-    "api": {
-      "min": 2,
-      "max": 2
-    },
-    "plugin": true,
-    "exec": "{nodeLoader} {path}",
-    "config": {
-      "pollInterval": 300,
-      "radius": 5
-    },
-    "schema": {
-      "type": "object",
-      "required": [
-        "latitude",
-        "longitude",
-        "pollInterval",
-        "radius"
-      ],
-      "properties": {
-        "latitude": {
-          "type": "number",
-          "title": "The latitude of your position"
-        },
-        "longitude": {
-          "type": "number",
-          "title": "The longitude of your position"
-        },
-        "pollInterval": {
-          "type": "number",
-          "title": "The poll interval in seconds"
-        },
-        "radius": {
-          "type": "number",
-          "title": "The search radius in km"
-        }
-      }
-    }
-  },
   "dependencies": {
     "@types/node-fetch": "^2.5.7",
     "node-fetch": "^2.6.1"
